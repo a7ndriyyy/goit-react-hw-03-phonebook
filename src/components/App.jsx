@@ -21,6 +21,18 @@ state = {
     };
   }
 
+  componentDidMount() {
+    const localContact = localStorage.getItem('contact');
+    const parcedContact = JSON.parse(localContact);
+    if (parcedContact) {
+      this.setState({ contacts: [...parcedContact] });
+    }
+  }
+  componentDidUpdate(prevState) {
+    if (this.state.contacts !== prevState.contacts)
+      localStorage.setItem('contact', JSON.stringify(this.state.contacts));
+  }
+
   addContact = event => {
     const loweredCase = event.name.toLowerCase().trim();
 
